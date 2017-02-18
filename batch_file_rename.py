@@ -12,7 +12,6 @@ import os
 import sys
 import argparse
 
-
 def batch_rename(work_dir, old_ext, new_ext):
     # 指定目录的所有文件名
     # print os.listdir(work_dir)
@@ -25,11 +24,10 @@ def batch_rename(work_dir, old_ext, new_ext):
             newfile = ''.join(name_list)
             print newfile
             os.rename(os.path.join(work_dir, filename), os.path.join(work_dir, newfile))
-
-
 def main():
-    batch_rename('.', 'app-hodi', 'app-hodiTest.apk')
 
+    batch_rename('.', 'app-hodi', 'app-hodiTest.apk')
 
 if __name__ == '__main__':
     main()
+

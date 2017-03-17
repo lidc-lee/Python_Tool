@@ -9,27 +9,24 @@
 twisted 客户端
 """
 from twisted.internet import protocol, reactor
-import struct
-from frame_factory import DownProtocol
+from frame_factory import UpProtocol
+import array
 import json
 
-# HOST = '192.168.0.173'
-HOST = 'localhost'
-PORT = 21567
+HOST = '219.128.125.98'
+# HOST = 'localhost'
+PORT = 9800
+terminal = '88400036'
 
 
 class TSClntProtocol(protocol.Protocol):
     def sendData(self):
-        # frameFactory = DownProtocol()
-        # meterAddr = '33304552'
-        # result1 = frameFactory.encodeReadFrame(meterAddr, '8010')
-        # data = []
-        # for j in range(0, len(result1)):
-        #     data.append(struct.pack('B', result1[j]))
         data = raw_input('>')
         if data:
             print '...sending %s ...' % data
-            self.transport.write(data)
+            print array.array('B', login)
+            send_data = json.dumps(array.array('B', login))
+            self.transport.write(send_data)
         else:
             self.transport.loseConnection()
 
@@ -37,8 +34,7 @@ class TSClntProtocol(protocol.Protocol):
         self.sendData()
 
     def dataReceived(self, data):
-        print data
-        # temp = json.load(data)
+        print self.upFactory.decodeFrame(data)
         self.sendData()
 
 
@@ -55,5 +51,8 @@ class TSClntFactory(protocol.ClientFactory):
         # clientConnectionLost = clientConnectionFailed = lambda self, connector, reason: reactor.stop()
 
 
+frameFactory = UpProtocol()
+login = frameFactory.frame_login(terminal)
+print login
 reactor.connectTCP(HOST, PORT, TSClntFactory())
 reactor.run()

@@ -281,7 +281,18 @@ class UpProtocol(UpProtocolFather):
 
     # 连接通信服务器
     def frame_connection(self, terminal):
-        result = self.frame_top(terminal, 0xE0)
+        result = []
+        result.append(0x68)
+        result.append(0x88)
+        result.append(0x00)
+        result.append(0x20)
+        result.append(0x00)
+        result.append(0x20)
+        if self.cnt < 15:
+            result.append(self.cnt)
+            self.cnt += 1
+        else:
+            self.cnt = 0
         result.append(0x68)
         result.append(0x25)
         result.append(0x0D)

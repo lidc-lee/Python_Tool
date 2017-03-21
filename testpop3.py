@@ -12,14 +12,8 @@ import poplib
 
 HOST = 'pop.qq.com'
 PORT = 995
-msg = """From: test <1499117534@qq.com>
-To: temp <1499117534@qq.com>
-Subject: 测试邮件
 
-这是一封测试邮件。
-"""
-
-def send_mail():
+def recevice_mail():
     pop = poplib.POP3_SSL(HOST, PORT)
     print 'Connect qq mail server success'
     pop.user('1499117534')
@@ -37,4 +31,4 @@ def send_mail():
 
 
 if __name__ == '__main__':
-    send_mail()
+    recevice_mail()

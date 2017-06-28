@@ -10,7 +10,7 @@
 """
 
 import sys
-import os,glob
+import os
 import platform
 import urllib2
 
@@ -21,10 +21,6 @@ from send2trash import send2trash
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
-
-# new_width =2048
-# width =int(raw_input("the width U want:"))
-# imgslist = glob.glob(path+'/*.*')
 
 ShuiPing = "水平"
 ShiZhuang = "矢状"
@@ -88,6 +84,8 @@ def change_img_type(img_path):
         print e
 
         # 处理远程图片
+
+
 def handle_remote_img(img_url):
     try:
         request = urllib2.Request(img_url)
@@ -125,13 +123,13 @@ def BFS_Dir(dirPath, dirCallback=None, fileCallback=None):
     queue.append(dirPath);
     while len(queue) > 0:
         tmp = queue.pop(0)
-        if (os.path.isdir(tmp)):
+        if os.path.isdir(tmp):
             ret.append(tmp)
             for item in os.listdir(tmp):
                 queue.append(os.path.join(tmp, item))
             if dirCallback:
                 dirCallback(tmp)
-        elif (os.path.isfile(tmp)):
+        elif os.path.isfile(tmp):
             ret.append(tmp)
             if fileCallback:
                 fileCallback(tmp)
@@ -144,13 +142,13 @@ def DFS_Dir(dirPath, dirCallback=None, fileCallback=None):
     stack.append(dirPath);
     while len(stack) > 0:
         tmp = stack.pop(len(stack) - 1)
-        if (os.path.isdir(tmp)):
+        if os.path.isdir(tmp):
             ret.append(tmp)
             for item in os.listdir(tmp):
                 stack.append(os.path.join(tmp, item))
             if dirCallback:
                 dirCallback(tmp)
-        elif (os.path.isfile(tmp)):
+        elif os.path.isfile(tmp):
             ret.append(tmp)
             if fileCallback:
                 fileCallback(tmp)
@@ -159,7 +157,7 @@ def DFS_Dir(dirPath, dirCallback=None, fileCallback=None):
 
 def printDir(dirPath):
     print "dir: " + dirPath
-    if (is_hiden_file(dirPath)):
+    if is_hiden_file(dirPath):
         remove_hidden_file(dirPath)
     else:
         rename_forder(dirPath)
@@ -172,12 +170,11 @@ def printFile(dirPath):
 
 
 if __name__ == '__main__':
-    while True:
-        path = raw_input("Path:")
-        new_width = int(raw_input("the width U want:"))
-        try:
-            b = BFS_Dir(path, printDir, printFile)
-            Py_Log("\r\n          **********\r\n" + "*********图片处理完毕*********" + "\r\n          **********\r\n")
-        except:
-            print "Unexpected error:", sys.exc_info()
-        raw_input('press enter key to rehandle')
+    path = "E:\pp"
+    new_width = 80
+    try:
+        b = BFS_Dir(path, printDir, printFile)
+        # b = printFile(path)
+        Py_Log("\r\n          **********\r\n" + "*********图片处理完毕*********" + "\r\n          **********\r\n")
+    except:
+        print "Unexpected error:", sys.exc_info()
